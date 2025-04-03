@@ -1,7 +1,13 @@
 quarkus:
   datasource:
-    # h2
     db-kind: postgresql
+    devservices:
+      enabled: true
+      port: 5432
+      image-name: postgres:15.4
+      db-name: cryptography_test
+      username: postgres
+      password: postgres
 
   hibernate-orm:
     database:

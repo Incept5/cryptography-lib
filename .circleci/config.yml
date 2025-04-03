@@ -5,8 +5,9 @@ orbs:
 
 jobs:
   build-and-test:
-    docker:
-      - image: cimg/openjdk:21.0
+    machine:
+      image: ubuntu-2204:current
+      docker_layer_caching: true
     steps:
       - checkout
       - gradle/with_cache:
@@ -21,8 +22,9 @@ jobs:
           destination: reports
 
   publish-to-jitpack:
-    docker:
-      - image: cimg/openjdk:21.0
+    machine:
+      image: ubuntu-2204:current
+      docker_layer_caching: true
     steps:
       - checkout
       - run:
