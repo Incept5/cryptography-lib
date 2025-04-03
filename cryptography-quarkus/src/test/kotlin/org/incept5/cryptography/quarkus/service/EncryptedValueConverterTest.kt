@@ -23,9 +23,7 @@ class EncryptedValueConverterTest {
     lateinit var encryptedValueConverter: EncryptedValueConverter
 
     companion object {
-        const val CIPHER_TEXT = """
-            {"provider":"Incdept5EncryptionProviderV1","keyId":"8d56336b-d2e0-4d2d-81f6-9ced981a62bd","hmac":"LfTPiM1m2e4SXjn9mIv9PVCXrVw1SfjMwkS7f+4TvWM=","encryptedValue":"8SBsHQBEDWGT4s1BRMhUe/CQO8Z251Azc/mbeiXKPYQ=","initialisationVector":"RCdfvoC671KIACenCDZujw=="}
-        """
+        const val CIPHER_TEXT = """{"provider":"Incept5EncryptionProviderV1","keyId":"8d56336b-d2e0-4d2d-81f6-9ced981a62bd","hmac":"LfTPiM1m2e4SXjn9mIv9PVCXrVw1SfjMwkS7f+4TvWM=","encryptedValue":"8SBsHQBEDWGT4s1BRMhUe/CQO8Z251Azc/mbeiXKPYQ=","initialisationVector":"RCdfvoC671KIACenCDZujw=="}"""
     }
 
     @BeforeEach
@@ -65,13 +63,18 @@ class EncryptedValueConverterTest {
     fun `convert from database column success - decrypt cipher`() {
         // Given a text to convert
         val inputText = CIPHER_TEXT
-        whenever(encryptionService.decrypt(inputText)).thenReturn(CIPHER_TEXT)
-
+        val decodedText = "decodedValue"
+        val decodedBytes = decodedText.toByteArray()
+        
+        // Mock the decryptAsBytes method which is now directly used in convertToEntityAttribute
+        whenever(encryptionService.decryptAsBytes(inputText)).thenReturn(decodedBytes)
+        
         // When convert from db values
-        encryptedValueConverter.convertToEntityAttribute(inputText)
+        val result = encryptedValueConverter.convertToEntityAttribute(inputText)
 
         // Then the text is converted
-        verify(encryptionService).decrypt(inputText)
+        verify(encryptionService).decryptAsBytes(inputText)
+        assertEquals(decodedText, result)
     }
 
     @Test

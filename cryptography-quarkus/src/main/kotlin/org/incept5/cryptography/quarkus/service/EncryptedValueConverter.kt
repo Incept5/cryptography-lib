@@ -21,7 +21,8 @@ class EncryptedValueConverter : AttributeConverter<String, String> {
         return if (!cipherText.contains("Incept5EncryptionProviderV1")) {
             cipherText
         } else {
-            encryptionService.decrypt(cipherText)
+            val bytes = encryptionService.decryptAsBytes(cipherText)
+            if (bytes != null) String(bytes) else null
         }
     }
 }
