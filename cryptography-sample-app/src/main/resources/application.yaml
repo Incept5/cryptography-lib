@@ -3,7 +3,7 @@ quarkus:
     db-kind: postgresql
     devservices:
       enabled: true
-      port: 5432
+      # Remove fixed port to allow TestContainers to use a random available port
       image-name: postgres:15.4
       db-name: cryptography_test
       username: postgres

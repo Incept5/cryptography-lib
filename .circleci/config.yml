@@ -10,6 +10,11 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
+      - run:
+          name: Setup TestContainers
+          command: |
+            mkdir -p ~/.testcontainers
+            echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
       - gradle/with_cache:
           steps:
             - run:
@@ -27,6 +32,11 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
+      - run:
+          name: Setup TestContainers
+          command: |
+            mkdir -p ~/.testcontainers
+            echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
       - run:
           name: Set Build Number
           command: |
