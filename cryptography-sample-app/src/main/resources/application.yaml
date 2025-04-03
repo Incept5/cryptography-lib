@@ -1,0 +1,26 @@
+quarkus:
+  datasource:
+    # h2
+    db-kind: postgresql
+
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+
+  flyway:
+    default-schema: example
+    migrate-at-start: true
+    locations: db/migration,incept5/cryptography
+
+# incept5 specific
+incept5:
+  cryptography:
+    encryption:
+      key:
+        id: 81b4f837-c134-4e7f-bb5e-802d5dcc5d4c
+        aes: 8hV/a1MfXxjS54JS+35TMQx7K2TH/8eX6BtrwRKXARg=
+        hmac: sHjLLmW3wA6KWu3cBDJwi9bsVD7bqoTVEzJHacgSfns=
+      decryption-keys:
+        - id: ${velostone.cryptography.encryption.key.id}
+          aes: ${velostone.cryptography.encryption.key.aes}
+          hmac: ${velostone.cryptography.encryption.key.hmac}
