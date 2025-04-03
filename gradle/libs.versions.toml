@@ -44,6 +44,7 @@ jakarta-bom = { module = "jakarta.platform:jakarta.jakartaee-bom", version.ref =
 jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
 jackson-jsr = {module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 jackson-jdk8 = {module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
+jackson-kotlin = {module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 
 # Apache Commons
 apache-commons = { module= "org.apache.commons:commons-lang3", version.ref = "apache-commons" }

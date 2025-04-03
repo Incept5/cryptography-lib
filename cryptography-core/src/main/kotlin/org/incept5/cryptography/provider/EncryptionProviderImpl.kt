@@ -112,7 +112,7 @@ class EncryptionProviderImpl(encryptionKey: EncryptionKey, decryptionKeys: Itera
 
             val hashBytes = hash(encBytes, encIv, decryptionKey.hmacKey)
             if (!CryptoUtil.areEqual(hashBytes, Base64.getDecoder().decode(encryptedValue.hmac))) {
-                throw EncryptionException("HMAC of encrypted value/IV does not match computed HMAC.  This may be due to the wrong encryption.VeloEncryptionProviderV1.key.<key-uuid>.hmac")
+                throw EncryptionException("HMAC of encrypted value/IV does not match computed HMAC.  This may be due to the wrong encryption.Incept5EncryptionProviderV1.key.<key-uuid>.hmac")
             }
 
             /* Decrypt the message, given derived key and initialization vector. */
@@ -177,7 +177,7 @@ class EncryptionProviderImpl(encryptionKey: EncryptionKey, decryptionKeys: Itera
     }
 
     companion object {
-        private const val ID = "VeloEncryptionProviderV1"
+        private const val ID = "Incept5EncryptionProviderV1"
         const val ENC_ALGORITHM: String = "AES/CBC/PKCS5Padding"
         private val random: Random = SecureRandom()
 

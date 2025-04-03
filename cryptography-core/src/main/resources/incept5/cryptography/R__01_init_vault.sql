@@ -1,4 +1,4 @@
--- This will run automatically only if flyway is told to look in velostone/cryptography as well as db/migration
+-- This will run automatically only if flyway is told to look in incept5/cryptography as well as db/migration
 CREATE SCHEMA IF NOT EXISTS ${flyway:defaultSchema};
 CREATE TABLE IF NOT EXISTS ${flyway:defaultSchema}.vault (
     id UUID PRIMARY KEY,

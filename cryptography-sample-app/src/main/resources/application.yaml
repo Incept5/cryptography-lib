@@ -21,6 +21,6 @@ incept5:
         aes: 8hV/a1MfXxjS54JS+35TMQx7K2TH/8eX6BtrwRKXARg=
         hmac: sHjLLmW3wA6KWu3cBDJwi9bsVD7bqoTVEzJHacgSfns=
       decryption-keys:
-        - id: ${velostone.cryptography.encryption.key.id}
-          aes: ${velostone.cryptography.encryption.key.aes}
-          hmac: ${velostone.cryptography.encryption.key.hmac}
+        - id: ${incept5.cryptography.encryption.key.id}
+          aes: ${incept5.cryptography.encryption.key.aes}
+          hmac: ${incept5.cryptography.encryption.key.hmac}

@@ -24,7 +24,7 @@ class EncryptedValueConverterTest {
 
     companion object {
         const val CIPHER_TEXT = """
-            {"provider":"VeloEncryptionProviderV1","keyId":"8d56336b-d2e0-4d2d-81f6-9ced981a62bd","hmac":"LfTPiM1m2e4SXjn9mIv9PVCXrVw1SfjMwkS7f+4TvWM=","encryptedValue":"8SBsHQBEDWGT4s1BRMhUe/CQO8Z251Azc/mbeiXKPYQ=","initialisationVector":"RCdfvoC671KIACenCDZujw=="}
+            {"provider":"Incdept5EncryptionProviderV1","keyId":"8d56336b-d2e0-4d2d-81f6-9ced981a62bd","hmac":"LfTPiM1m2e4SXjn9mIv9PVCXrVw1SfjMwkS7f+4TvWM=","encryptedValue":"8SBsHQBEDWGT4s1BRMhUe/CQO8Z251Azc/mbeiXKPYQ=","initialisationVector":"RCdfvoC671KIACenCDZujw=="}
         """
     }
 

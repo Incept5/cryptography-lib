@@ -3,7 +3,7 @@ package org.incept5.cryptography.quarkus.config
 import io.smallrye.config.ConfigMapping
 import io.smallrye.config.WithName
 
-@ConfigMapping(prefix = "velostone.cryptography.encryption")
+@ConfigMapping(prefix = "incept5.cryptography.encryption")
 interface EncryptionConfig {
 
     @get:WithName("key")

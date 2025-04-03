@@ -14,6 +14,7 @@ tasks.test {
 dependencies {
     implementation(libs.jackson.jsr)
     implementation(libs.jackson.jdk8)
+    implementation(libs.jackson.kotlin)
     implementation(libs.apache.commons)
 }
 

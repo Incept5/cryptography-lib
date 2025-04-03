@@ -18,7 +18,7 @@ class EncryptedValueConverter : AttributeConverter<String, String> {
     override fun convertToEntityAttribute(cipherText: String?): String? {
         if (cipherText == null) return null
 
-        return if (!cipherText.contains("VeloEncryptionProviderV1")) {
+        return if (!cipherText.contains("Incept5EncryptionProviderV1")) {
             cipherText
         } else {
             encryptionService.decrypt(cipherText)

@@ -1,4 +1,4 @@
-# Velostone Cryptography Lib
+# Incept5 Cryptography Lib
 
 Welcome to the Cryptography-Lib, a library designed to streamline cryptography in your projects.
 
@@ -7,11 +7,11 @@ Welcome to the Cryptography-Lib, a library designed to streamline cryptography i
 
 ## Add flyway location
 
-Include the velostone/cryptography location as an extra flyway location in your application.yaml:
+Include the incdept5/cryptography location as an extra flyway location in your application.yaml:
 
     quarkus:
       flyway:
-        locations: db/migration,velostone/cryptography
+        locations: db/migration,incept5/cryptography
 
 
 ### Vault
@@ -45,7 +45,7 @@ Or you can use the `EncryptedValueConverter` to encrypt a field on an entity.
 ## Modules
 
 ### Cryptography-Quarkus
-The `cryptography-quarkus` module is a specialized cryptography library tailored for Quarkus applications. It extends the functionality of the VeloPayments core library `org.incept5:cryptography-core` to provide a seamless and efficient cryptography experience within Quarkus projects.
+The `cryptography-quarkus` module is a specialized cryptography library tailored for Quarkus applications. It extends the functionality of the Incept5 core library `org.incept5:cryptography-core` to provide a seamless and efficient cryptography experience within Quarkus projects.
 
 ### Cryptography-Sample-App
 The `cryptography-sample-app` module is a sample application specifically created for testing the cryptography capabilities of the Quarkus library. It serves as a practical demonstration of how to implement and leverage the features provided by the `cryptography-quarkus` module in a Quarkus environment.

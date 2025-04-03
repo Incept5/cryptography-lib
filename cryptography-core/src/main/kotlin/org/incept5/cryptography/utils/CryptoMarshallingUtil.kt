@@ -1,18 +1,26 @@
 package org.incept5.cryptography.utils
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.incept5.cryptography.EncryptionException
 import org.incept5.cryptography.core.EncryptedValue
 import java.io.IOException
 
 object CryptoMarshallingUtil {
-    private val objectMapper: com.fasterxml.jackson.databind.ObjectMapper = com.fasterxml.jackson.databind.ObjectMapper()
+    private val objectMapper: ObjectMapper = ObjectMapper()
 
     init {
-        objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        objectMapper.registerModule(com.fasterxml.jackson.datatype.jsr310.JSR310Module())
-        objectMapper.registerModule(com.fasterxml.jackson.datatype.jdk8.Jdk8Module())
-        //objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        // Register Kotlin module for proper data class serialization/deserialization
+        objectMapper.registerKotlinModule()
+        // Use JavaTimeModule instead of deprecated JSR310Module
+        objectMapper.registerModule(JavaTimeModule())
+        objectMapper.registerModule(Jdk8Module())
     }
 
     @Throws(EncryptionException::class)
@@ -35,7 +43,7 @@ object CryptoMarshallingUtil {
             if (json == null) {
                 return null
             }
-            return objectMapper.readValue<EncryptedValue>(json, EncryptedValue::class.java)
+            return objectMapper.readValue(json, EncryptedValue::class.java)
         } catch (e: IOException) {
             throw EncryptionException("Error unmarshalling JSON: $json", e) //won't be a security problem because the JSON is always encrypted
         } catch (e: RuntimeException) {
