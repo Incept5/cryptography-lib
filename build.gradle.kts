@@ -75,6 +75,30 @@ subprojects {
         }
     }
     
+    // Force all Kotlin dependencies to use the same version
+    configurations.all {
+        resolutionStrategy {
+            force(
+                "org.jetbrains.kotlin:kotlin-stdlib:1.9.22",
+                "org.jetbrains.kotlin:kotlin-stdlib-common:1.9.22",
+                "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22",
+                "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22",
+                "org.jetbrains.kotlin:kotlin-reflect:1.9.22"
+            )
+            // Force compatible versions of kotlinx libraries
+            eachDependency {
+                if (requested.group == "org.jetbrains.kotlinx") {
+                    when (requested.name) {
+                        "kotlinx-coroutines-core", 
+                        "kotlinx-coroutines-core-jvm" -> useVersion("1.7.3") // Last version compatible with Kotlin 1.9.x
+                        "kotlinx-serialization-core",
+                        "kotlinx-serialization-json" -> useVersion("1.6.2") // Last version compatible with Kotlin 1.9.x
+                    }
+                }
+            }
+        }
+    }
+    
     // Configure publishing for all subprojects
     configure<PublishingExtension> {
         repositories {

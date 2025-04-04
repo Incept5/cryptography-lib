@@ -1,0 +1,24 @@
+{
+  "spec": "Suggest a fix for this error:\ne: file:///Users/admin/Dev/incept5/starter-libraries/cryptography-lib/cryptography-quarkus/src/main/kotlin/org/incept5/cryptography/quarkus/config/EncryptionConfigMapper.kt:17:10 Class 'kotlin.jvm.JvmStatic' was compiled with an incompatible version of Kotlin. The actual metadata version is 2.1.0, but the compiler version 1.9.0 can read versions up to 2.0.0.\nThe class is loaded from /Users/admin/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.0/85f8b81009cda5890e54ba67d64b5e599c645020/kotlin-stdlib-2.1.0.jar!/kotlin/jvm/JvmStatic.class",
+  "commitMessage": "Fix Kotlin version incompatibility by forcing consistent Kotlin and kotlinx-coroutines versions",
+  "stats": {
+    "inputTokens": 93898,
+    "cacheWriteTokens": 7128,
+    "cacheReadTokens": 85536,
+    "outputTokens": 2855,
+    "totalTokens": 0,
+    "cost": 0.24338925,
+    "currency": "gbp",
+    "processingMillis": 132494,
+    "git": {
+      "filesChanged": 4,
+      "insertions": 89,
+      "deletions": 2,
+      "linesChanged": 89,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}
