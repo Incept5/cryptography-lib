@@ -26,7 +26,7 @@ dependencies {
 
     runtimeOnly("io.quarkus:quarkus-arc")
     runtimeOnly("io.quarkus:quarkus-resteasy-reactive")
-    runtimeOnly(libs.quarkus.resteasy)
+    runtimeOnly("io.quarkus:quarkus-resteasy-reactive-jackson")
     runtimeOnly("io.quarkus:quarkus-jdbc-postgresql")
     runtimeOnly("io.quarkus:quarkus-config-yaml")
     runtimeOnly("io.quarkus:quarkus-flyway")

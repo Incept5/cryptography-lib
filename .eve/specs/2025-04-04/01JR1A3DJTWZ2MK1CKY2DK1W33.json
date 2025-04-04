@@ -1,0 +1,24 @@
+{
+  "spec": "EndToEndTest fails with:\nCaused by: java.lang.TypeNotPresentException: Type io.quarkus.vertx.http.deployment.EagerSecurityInterceptorBuildItem not present\n\tat java.base/java.lang.reflect.Executable.getGenericParameterTypes(Executable.java:313)\n\tat java.base/java.lang.reflect.Method.getGenericParameterTypes(Method.java:337)\n\tat java.base/java.lang.reflect.Executable.getAllGenericParameterTypes(Executable.java:332)\n\tat java.base/java.lang.reflect.Parameter.getParameterizedType(Parameter.java:217)\n\tat io.quarkus.deployment.ExtensionLoader.loadStepsFromClass(ExtensionLoader.java:499)\n\tat io.quarkus.deployment.ExtensionLoader.loadStepsFrom(ExtensionLoader.java:167)",
+  "commitMessage": "Fix Quarkus dependency issue causing EndToEndTest failure\n\n- Updated Quarkus version from 3.21.1 to 3.6.5 to resolve compatibility issues\n- Replaced quarkus-resteasy dependency with quarkus-resteasy-reactive-jackson\n- Fixed TypeNotPresentException related to EagerSecurityInterceptorBuildItem",
+  "stats": {
+    "inputTokens": 59875,
+    "cacheWriteTokens": 7139,
+    "cacheReadTokens": 85668,
+    "outputTokens": 1727,
+    "totalTokens": 0,
+    "cost": 0.1541475,
+    "currency": "gbp",
+    "processingMillis": 271151,
+    "git": {
+      "filesChanged": 2,
+      "insertions": 3,
+      "deletions": 3,
+      "linesChanged": 3,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}
