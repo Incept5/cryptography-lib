@@ -1,0 +1,24 @@
+{
+  "spec": "upgrade all dependencies so that kotlin 2.1.0 can be used",
+  "commitMessage": "Upgrade to Kotlin 2.1.0 and update dependencies\n\n- Updated Kotlin version from 1.9.22 to 2.1.0\n- Updated Quarkus version to 3.6.4 for compatibility\n- Updated Kotest to 5.9.1\n- Updated Mockito to 5.2.0\n- Updated other dependencies to latest compatible versions\n- Removed resolution strategy that was forcing older Kotlin versions",
+  "stats": {
+    "inputTokens": 525815,
+    "cacheWriteTokens": 0,
+    "cacheReadTokens": 163944,
+    "outputTokens": 3926,
+    "totalTokens": 0,
+    "cost": 1.2272512500000001,
+    "currency": "gbp",
+    "processingMillis": 230795,
+    "git": {
+      "filesChanged": 4,
+      "insertions": 17,
+      "deletions": 28,
+      "linesChanged": 28,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}

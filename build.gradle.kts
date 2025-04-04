@@ -75,25 +75,14 @@ subprojects {
         }
     }
     
-    // Force all Kotlin dependencies to use the same version
+    // Allow latest Kotlin dependencies
     configurations.all {
         resolutionStrategy {
-            force(
-                "org.jetbrains.kotlin:kotlin-stdlib:1.9.22",
-                "org.jetbrains.kotlin:kotlin-stdlib-common:1.9.22",
-                "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22",
-                "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22",
-                "org.jetbrains.kotlin:kotlin-reflect:1.9.22"
-            )
-            // Force compatible versions of kotlinx libraries
+            // Let Gradle resolve the latest compatible versions
             eachDependency {
-                if (requested.group == "org.jetbrains.kotlinx") {
-                    when (requested.name) {
-                        "kotlinx-coroutines-core", 
-                        "kotlinx-coroutines-core-jvm" -> useVersion("1.7.3") // Last version compatible with Kotlin 1.9.x
-                        "kotlinx-serialization-core",
-                        "kotlinx-serialization-json" -> useVersion("1.6.2") // Last version compatible with Kotlin 1.9.x
-                    }
+                if (requested.group == "org.jetbrains.kotlinx" && requested.name.startsWith("kotlinx-coroutines")) {
+                    // Use latest coroutines compatible with Kotlin 2.1.0
+                    useVersion("1.8.0")
                 }
             }
         }

@@ -19,16 +19,16 @@ dependencies {
     api("jakarta.inject:jakarta.inject-api")
     api("org.eclipse.microprofile.config:microprofile-config-api")
 
-    implementation("commons-codec:commons-codec:1.16.0")
+    implementation("commons-codec:commons-codec:1.16.1")
     implementation("io.quarkus:quarkus-kotlin")
 
     // test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("org.mockito:mockito-core")
-    testImplementation("org.apache.commons:commons-lang3:3.13.0")
-    testImplementation("org.mockito:mockito-inline:4.0.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.mockito:mockito-core:5.2.0")
+    testImplementation("org.apache.commons:commons-lang3:3.14.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
 }
 
 publishing {

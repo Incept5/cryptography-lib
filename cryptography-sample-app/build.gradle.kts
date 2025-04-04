@@ -38,8 +38,8 @@ dependencies {
     testImplementation(project(":cryptography-core"))
     
     // Add TestContainers for PostgreSQL
-    testImplementation("org.testcontainers:postgresql:1.19.3")
-    testImplementation("org.testcontainers:junit-jupiter:1.19.3")
+    testImplementation("org.testcontainers:postgresql:1.19.7")
+    testImplementation("org.testcontainers:junit-jupiter:1.19.7")
 
 }
 
