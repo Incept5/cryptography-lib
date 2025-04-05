@@ -1,0 +1,24 @@
+{
+  "spec": "fix this problem with the end to end test (it may be a problem with the version of quarkus rest easy:\njava.lang.RuntimeException: java.lang.RuntimeException: Failed to load steps from class io.quarkus.resteasy.reactive.server.deployment.ResteasyReactiveProcessor\n\tat io.quarkus.test.junit.QuarkusTestExtension.throwBootFailureException(QuarkusTestExtension.java:611)\n\tat io.quarkus.test.junit.QuarkusTestExtension.interceptTestClassConstructor(QuarkusTestExtension.java:706)\n\tat java.base/java.util.Optional.orElseGet(Optional.java:364)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\nCaused by: java.lang.RuntimeException: Failed to load steps from class io.quarkus.resteasy.reactive.server.deployment.ResteasyReactiveProcessor",
+  "commitMessage": "Fix RESTEasy Reactive dependency issue by updating to quarkus-rest-jackson\n\n- Updated the dependency in libs.versions.toml from quarkus-resteasy-reactive-jackson to quarkus-rest-jackson\n- Changed the implementation dependency in cryptography-sample-app/build.gradle.kts\n- This fixes the issue with the end-to-end test failing due to incompatible RESTEasy Reactive processor",
+  "stats": {
+    "inputTokens": 244760,
+    "cacheWriteTokens": 7139,
+    "cacheReadTokens": 149919,
+    "outputTokens": 4077,
+    "totalTokens": 0,
+    "cost": 0.59657625,
+    "currency": "gbp",
+    "processingMillis": 163010,
+    "git": {
+      "filesChanged": 2,
+      "insertions": 4,
+      "deletions": 5,
+      "linesChanged": 5,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}

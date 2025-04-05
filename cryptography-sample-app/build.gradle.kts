@@ -25,8 +25,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-core")
 
     runtimeOnly("io.quarkus:quarkus-arc")
-    runtimeOnly("io.quarkus:quarkus-resteasy-reactive")
-    runtimeOnly("io.quarkus:quarkus-resteasy-reactive-jackson")
+    implementation(libs.quarkus.rest.jackson)
     runtimeOnly("io.quarkus:quarkus-jdbc-postgresql")
     runtimeOnly("io.quarkus:quarkus-config-yaml")
     runtimeOnly("io.quarkus:quarkus-flyway")
