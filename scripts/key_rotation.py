@@ -10,21 +10,10 @@ This script rotates encryption keys by:
 5. Updating the vault with the newly encrypted values
 
 Usage:
-    python key_rotation.py --db-url <jdbc_url> --db-user <username> --db-password <password> \
-                          --old-key-id <old_key_id> --old-key-aes <old_key_aes_base64> --old-key-hmac <old_key_hmac_base64> \
-                          --new-key-id <new_key_id> --new-key-aes <new_key_aes_base64> --new-key-hmac <new_key_hmac_base64> \
-                          [--schema <schema_name>] [--dry-run]
+    python key_rotation.py --config <config_file_path> [--dry-run]
 
 Example:
-    python key_rotation.py --db-url jdbc:postgresql://localhost:5432/cryptography_test \
-                          --db-user postgres --db-password postgres \
-                          --old-key-id 81b4f837-c134-4e7f-bb5e-802d5dcc5d4c \
-                          --old-key-aes 8hV/a1MfXxjS54JS+35TMQx7K2TH/8eX6BtrwRKXARg= \
-                          --old-key-hmac sHjLLmW3wA6KWu3cBDJwi9bsVD7bqoTVEzJHacgSfns= \
-                          --new-key-id 92c5f948-d245-5f8g-cc6f-913e6edd6e5d \
-                          --new-key-aes 9iW/b2NgYyKjT65KT+46UNRy8L3UI/9fY7CusXSLBSh= \
-                          --new-key-hmac tIkMMnX4xB7LXv4dCEKxj0ctWE8crlUWFzKIbdgTgot= \
-                          --schema example
+    python key_rotation.py --config key_rotation_config.yaml --dry-run
 """
 
 import argparse
@@ -38,6 +27,7 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
 import psycopg2
+import yaml
 from cryptography.hazmat.primitives import hashes, hmac
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
@@ -287,27 +277,45 @@ class VaultRotator:
         self.conn.commit()
 
 
+def load_config(config_file: str) -> Dict:
+    """Load configuration from YAML file"""
+    try:
+        with open(config_file, 'r') as f:
+            config = yaml.safe_load(f)
+        
+        # Validate required configuration
+        required_sections = ['database', 'old_key', 'new_key']
+        for section in required_sections:
+            if section not in config:
+                raise ValueError(f"Missing required configuration section: {section}")
+        
+        # Validate database configuration
+        required_db_fields = ['url', 'username', 'password']
+        for field in required_db_fields:
+            if field not in config['database']:
+                raise ValueError(f"Missing required database configuration field: {field}")
+        
+        # Validate key configurations
+        for key_type in ['old_key', 'new_key']:
+            required_key_fields = ['id', 'aes', 'hmac']
+            for field in required_key_fields:
+                if field not in config[key_type]:
+                    raise ValueError(f"Missing required {key_type} configuration field: {field}")
+        
+        return config
+    except Exception as e:
+        logger.error(f"Error loading configuration: {str(e)}")
+        raise
+
+
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(description='Rotate encryption keys in the vault')
     
-    # Database connection parameters
-    parser.add_argument('--db-url', required=True, help='JDBC URL for the database')
-    parser.add_argument('--db-user', required=True, help='Database username')
-    parser.add_argument('--db-password', required=True, help='Database password')
-    
-    # Old key parameters
-    parser.add_argument('--old-key-id', required=True, help='ID of the old encryption key')
-    parser.add_argument('--old-key-aes', required=True, help='Base64-encoded AES key (old)')
-    parser.add_argument('--old-key-hmac', required=True, help='Base64-encoded HMAC key (old)')
-    
-    # New key parameters
-    parser.add_argument('--new-key-id', required=True, help='ID of the new encryption key')
-    parser.add_argument('--new-key-aes', required=True, help='Base64-encoded AES key (new)')
-    parser.add_argument('--new-key-hmac', required=True, help='Base64-encoded HMAC key (new)')
+    # Configuration file
+    parser.add_argument('--config', required=True, help='Path to the YAML configuration file')
     
     # Optional parameters
-    parser.add_argument('--schema', default='', help='Database schema (default: public)')
     parser.add_argument('--dry-run', action='store_true', help='Perform a dry run without making changes')
     
     return parser.parse_args()
@@ -338,19 +346,34 @@ def extract_db_info(jdbc_url: str) -> Tuple[str, str, str]:
 def main():
     """Main function"""
     try:
-        import os
+        # Parse command line arguments
         args = parse_arguments()
         
+        # Load configuration
+        config = load_config(args.config)
+        
         # Extract database connection info
-        host, port, database = extract_db_info(args.db_url)
+        host, port, database = extract_db_info(config['database']['url'])
         
         # Create encryption keys
-        old_key = EncryptionKey(args.old_key_id, args.old_key_aes, args.old_key_hmac)
-        new_key = EncryptionKey(args.new_key_id, args.new_key_aes, args.new_key_hmac)
+        old_key = EncryptionKey(
+            config['old_key']['id'],
+            config['old_key']['aes'],
+            config['old_key']['hmac']
+        )
+        
+        new_key = EncryptionKey(
+            config['new_key']['id'],
+            config['new_key']['aes'],
+            config['new_key']['hmac']
+        )
         
         # Create encryption services
         old_encryption_service = EncryptionService(old_key, [old_key])
         new_encryption_service = EncryptionService(new_key, [new_key, old_key])
+        
+        # Get schema from config or use default
+        schema = config.get('database', {}).get('schema', '')
         
         # Connect to the database
         logger.info(f"Connecting to database {database} on {host}:{port}")
@@ -358,15 +381,15 @@ def main():
             host=host,
             port=port,
             database=database,
-            user=args.db_user,
-            password=args.db_password
+            user=config['database']['username'],
+            password=config['database']['password']
         )
         
         try:
             # Create and run the vault rotator
             rotator = VaultRotator(
                 conn, 
-                args.schema, 
+                schema, 
                 old_encryption_service, 
                 new_encryption_service, 
                 args.dry_run
