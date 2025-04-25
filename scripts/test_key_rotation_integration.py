@@ -19,6 +19,7 @@ import unittest
 import uuid
 
 import psycopg2
+import psycopg2.extras
 import yaml
 
 # Import the modules from key_rotation.py
@@ -43,6 +44,8 @@ class TestKeyRotationIntegration(unittest.TestCase):
         cls.db_password = os.environ.get("POSTGRES_PASSWORD", "postgres")
         cls.db_host = os.environ.get("POSTGRES_HOST", "localhost")
         cls.db_port = os.environ.get("POSTGRES_PORT", "5432")
+
+        psycopg2.extras.register_uuid()
         
         # Try to connect to the database, with retries
         max_retries = 5
