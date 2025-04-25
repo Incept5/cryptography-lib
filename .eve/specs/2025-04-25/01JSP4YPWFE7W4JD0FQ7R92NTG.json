@@ -1,0 +1,24 @@
+{
+  "spec": "Write unit tests for testing the key rotation script",
+  "commitMessage": "Add comprehensive unit and integration tests for key rotation script",
+  "stats": {
+    "inputTokens": 142893,
+    "cacheWriteTokens": 7141,
+    "cacheReadTokens": 21423,
+    "outputTokens": 7086,
+    "totalTokens": 0,
+    "cost": 0.40122675,
+    "currency": "gbp",
+    "processingMillis": 376522,
+    "git": {
+      "filesChanged": 3,
+      "insertions": 623,
+      "deletions": 1,
+      "linesChanged": 623,
+      "testFilesChanged": 2,
+      "testInsertions": 580,
+      "testDeletions": 0,
+      "testLinesChanged": 580
+    }
+  }
+}

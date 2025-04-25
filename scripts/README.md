@@ -136,3 +136,45 @@ incept5:
 - Perform key rotation during maintenance windows to minimize impact
 - Always back up your database before performing key rotation
 - Use environment variables or a secure parameter store for sensitive configuration in production
+
+## Testing
+
+The key rotation script comes with comprehensive unit and integration tests to ensure its reliability.
+
+### Unit Tests
+
+Unit tests verify the functionality of individual components without requiring a database connection:
+
+```bash
+# Run unit tests
+python -m unittest scripts/test_key_rotation.py
+```
+
+These tests cover:
+- Encryption and decryption functionality
+- Configuration loading and validation
+- Key rotation logic
+
+### Integration Tests
+
+Integration tests verify the script's functionality with a real PostgreSQL database. These tests require Docker to be installed and running:
+
+```bash
+# Run integration tests
+python -m unittest scripts/test_key_rotation_integration.py
+```
+
+These tests:
+- Spin up a temporary PostgreSQL container
+- Create a test vault table
+- Insert test data encrypted with the old key
+- Run the key rotation process
+- Verify that data can be decrypted with the new key
+
+### Running All Tests
+
+To run all tests:
+
+```bash
+python -m unittest discover scripts
+```
