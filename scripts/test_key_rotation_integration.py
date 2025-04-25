@@ -35,41 +35,42 @@ class TestKeyRotationIntegration(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up a PostgreSQL container for testing"""
-        # Check if Docker is available
-        try:
-            subprocess.run(["docker", "--version"], check=True, capture_output=True)
-        except (subprocess.SubprocessError, FileNotFoundError):
-            raise unittest.SkipTest("Docker is not available. Skipping integration tests.")
+        """Set up a connection to PostgreSQL for testing"""
+        # Define database connection parameters
+        # These will work both locally and in CircleCI
+        cls.db_name = os.environ.get("POSTGRES_DB", "cryptography_test")
+        cls.db_user = os.environ.get("POSTGRES_USER", "postgres")
+        cls.db_password = os.environ.get("POSTGRES_PASSWORD", "postgres")
+        cls.db_host = os.environ.get("POSTGRES_HOST", "localhost")
+        cls.db_port = os.environ.get("POSTGRES_PORT", "5432")
         
-        # Start a PostgreSQL container
-        cls.container_name = f"key-rotation-test-{uuid.uuid4()}"
-        cls.db_name = "testdb"
-        cls.db_user = "postgres"
-        cls.db_password = "postgres"
-        cls.db_port = "5432"
+        # Try to connect to the database, with retries
+        max_retries = 5
+        retry_delay = 2
         
-        # Start the container
-        subprocess.run([
-            "docker", "run", "--name", cls.container_name,
-            "-e", f"POSTGRES_DB={cls.db_name}",
-            "-e", f"POSTGRES_USER={cls.db_user}",
-            "-e", f"POSTGRES_PASSWORD={cls.db_password}",
-            "-p", f"{cls.db_port}:5432",
-            "-d", "postgres:15.4"
-        ], check=True)
+        for attempt in range(max_retries):
+            try:
+                print(f"Attempting to connect to database (attempt {attempt+1}/{max_retries})...")
+                cls.conn = psycopg2.connect(
+                    host=cls.db_host,
+                    port=cls.db_port,
+                    database=cls.db_name,
+                    user=cls.db_user,
+                    password=cls.db_password
+                )
+                print("Successfully connected to the database")
+                break
+            except psycopg2.OperationalError as e:
+                if attempt < max_retries - 1:
+                    print(f"Failed to connect to database: {e}")
+                    print(f"Retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    raise unittest.SkipTest(f"Could not connect to PostgreSQL: {e}")
         
-        # Wait for PostgreSQL to start
-        time.sleep(5)
-        
-        # Connect to the database
-        cls.conn = psycopg2.connect(
-            host="localhost",
-            port=cls.db_port,
-            database=cls.db_name,
-            user=cls.db_user,
-            password=cls.db_password
-        )
+        # Check if we have a valid connection
+        if not hasattr(cls, 'conn') or cls.conn is None:
+            raise unittest.SkipTest("Failed to establish database connection")
         
         # Create the vault table
         with cls.conn.cursor() as cursor:

@@ -2,8 +2,36 @@ version: 2.1
 
 orbs:
   gradle: circleci/gradle@3.0.0
+  python: circleci/python@2.1.1
 
 jobs:
+  python-tests:
+    docker:
+      - image: cimg/python:3.9
+      - image: cimg/postgres:15.4
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cryptography_test
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          packages:
+            - psycopg2-binary
+            - cryptography
+            - pyyaml
+      - run:
+          name: Run Python Unit Tests
+          command: |
+            cd scripts
+            python -m unittest test_key_rotation.py
+      - run:
+          name: Run Python Integration Tests
+          command: |
+            cd scripts
+            python -m unittest test_key_rotation_integration.py
+          
   build-and-test:
     machine:
       image: ubuntu-2204:current
@@ -214,10 +242,12 @@ workflows:
   version: 2
   build-test-publish:
     jobs:
+      - python-tests
       - build-and-test
       - publish-to-jitpack:
           requires:
             - build-and-test
+            - python-tests
           filters:
             branches:
               only: main

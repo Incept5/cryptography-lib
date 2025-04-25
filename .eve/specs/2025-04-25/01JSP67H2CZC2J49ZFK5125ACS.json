@@ -1,0 +1,24 @@
+{
+  "spec": "Update the CircleCI config to add a step of running python tests",
+  "commitMessage": "Add Python integration tests and update CircleCI configuration for database testing",
+  "stats": {
+    "inputTokens": 164548,
+    "cacheWriteTokens": 7141,
+    "cacheReadTokens": 21423,
+    "outputTokens": 1748,
+    "totalTokens": 0,
+    "cost": 0.389898,
+    "currency": "gbp",
+    "processingMillis": 453118,
+    "git": {
+      "filesChanged": 2,
+      "insertions": 66,
+      "deletions": 35,
+      "linesChanged": 66,
+      "testFilesChanged": 1,
+      "testInsertions": 36,
+      "testDeletions": 35,
+      "testLinesChanged": 36
+    }
+  }
+}
