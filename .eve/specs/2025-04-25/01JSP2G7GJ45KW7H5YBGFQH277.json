@@ -1,0 +1,24 @@
+{
+  "spec": "Write a Python script in the /scripts folder to support key rotation. It should decrypt the data in the Vault with the old key and encrypt it with the new key.",
+  "commitMessage": "Add key rotation script for vault encryption\n\n- Created a Python script to support key rotation for the vault\n- The script decrypts data with the old key and re-encrypts with the new key\n- Added comprehensive documentation for the script usage\n- Implemented security best practices for key handling",
+  "stats": {
+    "inputTokens": 110035,
+    "cacheWriteTokens": 7141,
+    "cacheReadTokens": 114256,
+    "outputTokens": 7414,
+    "totalTokens": 0,
+    "cost": 0.33098625,
+    "currency": "gbp",
+    "processingMillis": 259337,
+    "git": {
+      "filesChanged": 3,
+      "insertions": 509,
+      "deletions": 0,
+      "linesChanged": 509,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}
