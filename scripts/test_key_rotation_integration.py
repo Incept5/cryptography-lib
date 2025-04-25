@@ -102,13 +102,9 @@ class TestKeyRotationIntegration(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """Clean up the PostgreSQL container"""
+        """Clean up database connection"""
         if hasattr(cls, 'conn') and cls.conn:
             cls.conn.close()
-        
-        # Stop and remove the container
-        subprocess.run(["docker", "stop", cls.container_name], check=True)
-        subprocess.run(["docker", "rm", cls.container_name], check=True)
 
     def setUp(self):
         """Set up test data for each test"""
