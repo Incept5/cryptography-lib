@@ -188,7 +188,7 @@ val decryptedData: String? = encryptionService.decrypt(encryptedData)
 ## Security Considerations
 
 - Store encryption keys securely, preferably in a secure vault like HashiCorp Vault or AWS KMS
-- Rotate encryption keys periodically
+- Rotate encryption keys periodically (see [Key Rotation Documentation](scripts/README.md) for details)
 - Use environment variables or secure configuration providers for key storage in production
 - Consider implementing key rotation strategies for long-term data storage
 
@@ -223,6 +223,12 @@ incept5:
           aes: old-aes-key
           hmac: old-hmac-key
 ```
+
+### Key Rotation
+
+For secure key rotation, a Python utility script is provided in the `scripts` directory. This script helps you safely rotate encryption keys in the vault database.
+
+See the [Key Rotation Documentation](scripts/README.md) for detailed instructions on how to use this utility.
 
 ### Custom Encryption Providers
 
