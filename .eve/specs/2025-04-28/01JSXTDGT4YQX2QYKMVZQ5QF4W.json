@@ -1,0 +1,24 @@
+{
+  "spec": "add reference in the root README.MD to refer the key rotation README in the scripts folder",
+  "commitMessage": "Add reference to key rotation documentation in root README.md",
+  "stats": {
+    "inputTokens": 13775,
+    "cacheWriteTokens": 15318,
+    "cacheReadTokens": 61272,
+    "outputTokens": 962,
+    "totalTokens": 0,
+    "cost": 0.04181625,
+    "currency": "gbp",
+    "processingMillis": 24836,
+    "git": {
+      "filesChanged": 1,
+      "insertions": 7,
+      "deletions": 1,
+      "linesChanged": 7,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}

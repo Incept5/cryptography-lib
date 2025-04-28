@@ -1,0 +1,24 @@
+{
+  "spec": "Fix error in test_dry_run_mode (test_key_rotation_integration.TestKeyRotationIntegration). The error details are as follows\n\nTraceback (most recent call last):\n  File \"/home/circleci/project/scripts/test_key_rotation_integration.py\", line 140, in setUp\n    cursor.execute(\npsycopg2.ProgrammingError: can't adapt type 'UUID'",
+  "commitMessage": "Refactor tearDownClass method to remove Docker container cleanup",
+  "stats": {
+    "inputTokens": 90345,
+    "cacheWriteTokens": 7141,
+    "cacheReadTokens": 7141,
+    "outputTokens": 372,
+    "totalTokens": 0,
+    "cost": 0.20746124999999999,
+    "currency": "gbp",
+    "processingMillis": 214618,
+    "git": {
+      "filesChanged": 1,
+      "insertions": 1,
+      "deletions": 5,
+      "linesChanged": 5,
+      "testFilesChanged": 1,
+      "testInsertions": 1,
+      "testDeletions": 5,
+      "testLinesChanged": 5
+    }
+  }
+}

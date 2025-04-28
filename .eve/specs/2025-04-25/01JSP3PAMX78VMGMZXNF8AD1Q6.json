@@ -1,0 +1,24 @@
+{
+  "spec": "Instead of passing parameters to the script, please create a yaml configuration file and load the configuration from there",
+  "commitMessage": "Update key rotation script to use YAML configuration\n\n- Modified key_rotation.py to load configuration from a YAML file\n- Added key_rotation_config.yaml.example as a template\n- Updated README.md with new usage instructions\n- Added security considerations for configuration handling",
+  "stats": {
+    "inputTokens": 249693,
+    "cacheWriteTokens": 7141,
+    "cacheReadTokens": 64269,
+    "outputTokens": 7964,
+    "totalTokens": 0,
+    "cost": 0.65140425,
+    "currency": "gbp",
+    "processingMillis": 656088,
+    "git": {
+      "filesChanged": 3,
+      "insertions": 137,
+      "deletions": 66,
+      "linesChanged": 137,
+      "testFilesChanged": 0,
+      "testInsertions": 0,
+      "testDeletions": 0,
+      "testLinesChanged": 0
+    }
+  }
+}

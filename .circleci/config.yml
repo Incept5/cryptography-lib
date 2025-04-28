@@ -2,8 +2,34 @@ version: 2.1
 
 orbs:
   gradle: circleci/gradle@3.0.0
+  python: circleci/python@2.1.1
 
 jobs:
+  python-tests:
+    docker:
+      - image: cimg/python:3.9
+      - image: cimg/postgres:15.4
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cryptography_test
+    steps:
+      - checkout
+      - run:
+          name: Install Python Packages
+          command: |
+            pip install psycopg2-binary cryptography pyyaml
+      - run:
+          name: Run Python Unit Tests
+          command: |
+            cd scripts
+            python -m unittest test_key_rotation.py
+      - run:
+          name: Run Python Integration Tests
+          command: |
+            cd scripts
+            python -m unittest test_key_rotation_integration.py
+
   build-and-test:
     machine:
       image: ubuntu-2204:current
@@ -90,21 +116,21 @@ jobs:
             if [ ! -f "$HOME/.m2/repository/com/github/incept5/cryptography-core/${VERSION}/cryptography-core-${VERSION}.jar" ]; then
               echo "ERROR: cryptography-core JAR not found locally at expected path"
               echo "Expected: $HOME/.m2/repository/com/github/incept5/cryptography-core/${VERSION}/cryptography-core-${VERSION}.jar"
-              
+            
               # Check if the directory exists
               if [ -d "$HOME/.m2/repository/com/github/incept5/cryptography-core" ]; then
                 echo "Available versions for cryptography-core:"
                 ls -la "$HOME/.m2/repository/com/github/incept5/cryptography-core/"
               fi
-              
+            
               # Try to find it elsewhere
               echo "Searching for cryptography-core JAR:"
               find $HOME/.m2/repository -name "cryptography-core-*.jar" | sort
-              
+            
               # Try one more publish with explicit version
               echo "Attempting one more publish with explicit version ${VERSION}"
               ./gradlew :cryptography-core:clean :cryptography-core:build :cryptography-core:publishToMavenLocal -Pversion=${VERSION} --stacktrace
-              
+            
               # Check again
               if [ -f "$HOME/.m2/repository/com/github/incept5/cryptography-core/${VERSION}/cryptography-core-${VERSION}.jar" ]; then
                 echo "Successfully published cryptography-core JAR after retry"
@@ -117,21 +143,21 @@ jobs:
             if [ ! -f "$HOME/.m2/repository/com/github/incept5/cryptography-quarkus/${VERSION}/cryptography-quarkus-${VERSION}.jar" ]; then
               echo "ERROR: cryptography-quarkus JAR not found locally at expected path"
               echo "Expected: $HOME/.m2/repository/com/github/incept5/cryptography-quarkus/${VERSION}/cryptography-quarkus-${VERSION}.jar"
-              
+            
               # Check if the directory exists
               if [ -d "$HOME/.m2/repository/com/github/incept5/cryptography-quarkus" ]; then
                 echo "Available versions for cryptography-quarkus:"
                 ls -la "$HOME/.m2/repository/com/github/incept5/cryptography-quarkus/"
               fi
-              
+            
               # Try to find it elsewhere
               echo "Searching for cryptography-quarkus JAR:"
               find $HOME/.m2/repository -name "cryptography-quarkus-*.jar" | sort
-              
+            
               # Try one more publish with explicit version
               echo "Attempting one more publish with explicit version ${VERSION}"
               ./gradlew :cryptography-quarkus:clean :cryptography-quarkus:build :cryptography-quarkus:publishToMavenLocal -Pversion=${VERSION} --stacktrace
-              
+            
               # Check again
               if [ -f "$HOME/.m2/repository/com/github/incept5/cryptography-quarkus/${VERSION}/cryptography-quarkus-${VERSION}.jar" ]; then
                 echo "Successfully published cryptography-quarkus JAR after retry"
@@ -214,10 +240,12 @@ workflows:
   version: 2
   build-test-publish:
     jobs:
+      - python-tests
       - build-and-test
       - publish-to-jitpack:
           requires:
             - build-and-test
+            - python-tests
           filters:
             branches:
               only: main

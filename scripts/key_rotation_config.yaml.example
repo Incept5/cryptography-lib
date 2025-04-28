@@ -1,0 +1,26 @@
+# Key Rotation Configuration Example
+# Make a copy of this file and update with your actual values
+# DO NOT commit files with actual keys to version control
+
+# Database connection settings
+database:
+  url: jdbc:postgresql://localhost:5432/cryptography_test
+  username: postgres
+  password: postgres
+  schema: example  # Optional, defaults to public if not specified
+
+# Old encryption key (current key)
+old_key:
+  id: 81b4f837-c134-4e7f-bb5e-802d5dcc5d4c
+  aes: 8hV/a1MfXxjS54JS+35TMQx7K2TH/8eX6BtrwRKXARg=
+  hmac: sHjLLmW3wA6KWu3cBDJwi9bsVD7bqoTVEzJHacgSfns=
+
+# New encryption key (to rotate to)
+new_key:
+  id: 92c5f948-d245-5f8g-cc6f-913e6edd6e5d
+  aes: 9iW/b2NgYyKjT65KT+46UNRy8L3UI/9fY7CusXSLBSh=
+  hmac: tIkMMnX4xB7LXv4dCEKxj0ctWE8crlUWFzKIbdgTgot=
+
+# Optional settings
+options:
+  batch_size: 100  # Number of items to process in a batch (not implemented yet)
